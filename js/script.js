@@ -3,7 +3,7 @@
 let displayValue = '0';
 
 /*DOM elements */
-const display = document.getElementById('calculator-display');
+const display = document.querySelector('#calculator-display');
 
 /* Assignment letter a) Math functions */
 

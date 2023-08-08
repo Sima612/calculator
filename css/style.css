@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Digital-7';
+    src: url(../font/digital-7.ttf) format(truetype);
+    font-weight: normal;
+}
+
 *{
     margin: 0;
     padding: 0;
@@ -7,21 +13,28 @@
 }
 
 body{
-    width: 100vw;
-    height: 100vh;
+    background-color: #666464;
+}
+
+header{
+    padding: 1vw;
+}
+
+main{
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #666464;
 }
 .container{
     display: grid;
-    grid-template-columns: repeat(4, 80px);
-    grid-template-rows: 150px repeat(5, 80px);
-    gap: 15px;
-    padding: 40px;
-    border-radius: 10px;
+    grid-template-columns: repeat(4, 5vw);
+    grid-template-rows: 15vh repeat(5, 10vh);
+    gap: 1vw;
+    padding: 2vw;
+    margin: 2vw;
+    border-radius: 15px;
     background: linear-gradient(to bottom, #351e1e, #1c1c1c);
+    box-shadow: 0 2px 5px #000;
 
 }
 
@@ -29,8 +42,10 @@ body{
     grid-column: 1/5;
     grid-row: 1/2;
     border-radius: 10px;
-    border: 3px solid #343134;
-    padding: 20px;
+    border: 2px solid #343134;
+    font-family: 'Digital-7', monospace;
+    font-weight: 300;
+    padding: 2vw;
     display: flex;
     justify-content: flex-end;
     align-items: center;
