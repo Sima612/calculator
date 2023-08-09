@@ -1,82 +1,132 @@
 /*Variables */
 
 let displayValue = '0';
+let expression = '';
 
 /*DOM elements */
 const display = document.querySelector('#calculator-display');
 const backspaceButton = document.querySelector('#backspace');
+const clearButton = document.querySelector('#clear');
+const operateButton = document.querySelector('#operate');
 const numberButtons = document.querySelectorAll('.container button[type="button"][value]');
 
 //Backspace button click event listener
 backspaceButton.addEventListener('click', handleBackspace);
 
+//Operate button click event listener
+operateButton.addEventListener('click', handleOperation);
+
+//Clear button click event listener
+clearButton.addEventListener('click', handleClear);
+
 //Number button click event listener
 numberButtons.forEach(button => {
-    button.addEventListener('click',() => handleNumberButtonClick(button.value));
-});
-
-//Backspace button click event handler
-function handleBackspace(){
-    if(displayValue.length > 1){
-            displayValue = displayValue.slice(0, -1);
-        }
-        else{
-            displayValue = '0';
+    button.addEventListener('click', function(){
+        if (displayValue === '0' || displayValue === 'Error') {
+            displayValue = button.value;
+            //If the first button is an operator, don't add it to the expression
+            if (button.classList.contains('operator')){
+                displayValue = 'Error';
+            } else {
+                expression = button.value;
+            }
+        } else {
+            //If the button is an operator, add spaces around it
+            if (button.classList.contains('operator')){
+                //If the last character is an operator, replace it with the new one
+                if (expression.slice(-1) === ' '){ 
+                    expression = expression.slice(0, -3);
+                    displayValue = displayValue.slice(0, -1);
+                    expression += ' ' + button.value + ' ';
+                } else { //If the last character is a number, add the new operator
+                    expression += ' ' + button.value + ' ';
+                }
+            } else {
+                expression += button.value;
+            }
+            displayValue += button.value;
         }
         updateDisplay();
-    
-}
+    });
+});
 
-// function updateDispaly(){
-//     display.innerText = dispalyValue;
-// }
-function handleNumberButtonClick(number) {
-    if (displayValue === '0' || displayValue === 'Error') {
-        displayValue = number;
-    } else {
-        displayValue += number;
-    }
+//Clear button click event function
+function handleClear(){
+    displayValue = '0';
+    expression = '';
     updateDisplay();
 }
 
+//Backspace button click event function
+function handleBackspace(){
+    if(displayValue.length > 1){
+            displayValue = displayValue.slice(0, -1);
+            if (expression.slice(-1) === ' '){
+                expression = expression.slice(0, -3);
+            } else {
+                expression = expression.slice(0, -1);
+            }
+        }
+        else{
+            displayValue = '0';
+            expression = '';
+        }
+        updateDisplay(); 
+}
+
+//Operate button click event function
+function handleOperation(){
+    const expressionArray = expression.split(' ');
+    //Evaluate expression by pairs until there's one result
+    while (expressionArray.length > 1){
+        let operation = expressionArray.splice(0, 3);
+        let result = operate(operation[1], parseFloat(operation[0]), parseFloat(operation[2]));
+        expressionArray.unshift(result.toFixed(2));
+        //If the result is an error, stop the loop
+        if (expressionArray[0] === 'NaN'){
+            break;
+        }
+    }
+    //If the result is an error, clear the display  
+    if (expressionArray[0] === 'NaN'){
+        displayValue = 'Error';
+        expression = '';
+        updateDisplay();
+    } else{ //If the result is a number, update the display
+        expression = expressionArray[0].toString();
+        displayValue = expressionArray[0].toString();
+        updateDisplay();
+    }
+    
+}
 
 /* Assignment letter a) Math functions */
 function add(number1, number2){
     const result = number1 + number2;
-    displayValue = result.toString();
-    updateDisplay();
     return result;
 }
 
 function subtract(number1, number2){
     const result = number1 - number2;
-    displayValue = result.toString();
-    updateDisplay();
     return result;
 }
 
 function multiply(number1, number2){
     const result = number1 * number2;
-    displayValue = result.toString();
-    updateDisplay();
     return result;
 }
 
 function divide(number1, number2){
     if (number2 === 0) {
-        return number1;
+        return NaN
     } else {
         const result = number1 / number2;
-        displayValue = result.toString();
-        updateDisplay();
         return result;
     }
 }
 
 function percent(number1, number2){
     const result = (number1 / 100) * number2;
-    displayValue = result.toString();
-    updateDisplay();
     return result;
 }
 
@@ -101,7 +151,7 @@ function operate(operator, number1, number2){
     return result;
 }
 
-/*Assignmet letter d) display atualization */
+/*Assignmet letter d) display update */
 
 function updateDisplay() {
     display.innerText = displayValue;
