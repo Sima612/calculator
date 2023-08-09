@@ -55,6 +55,9 @@ main{
 }
 
 button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 2rem;
     border: none;
     border-radius: 50%;
@@ -76,4 +79,9 @@ button{
 .orange{
     background-color: #f1912a;
     font-weight: 600;
+}
+
+#backspace span{
+    color: #000;
+    font-size: 2rem;
 }
