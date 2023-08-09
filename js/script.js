@@ -10,6 +10,12 @@ const clearButton = document.querySelector('#clear');
 const operateButton = document.querySelector('#operate');
 const numberButtons = document.querySelectorAll('.container button[type="button"][value]');
 
+//TO DO: Add keyboard support
+//TO DO: Add decimal point support
+//TO DO: Add negative number support
+//TO DO: Add percentage support
+//TO DO: Display overflow support
+
 //Backspace button click event listener
 backspaceButton.addEventListener('click', handleBackspace);
 
@@ -60,12 +66,13 @@ function handleClear(){
 //Backspace button click event function
 function handleBackspace(){
     if(displayValue.length > 1){
-            displayValue = displayValue.slice(0, -1);
+            //If the last character is an operator, remove the spaces around it
             if (expression.slice(-1) === ' '){
                 expression = expression.slice(0, -3);
-            } else {
+            } else { //If the last character is a number, remove it
                 expression = expression.slice(0, -1);
             }
+            displayValue = displayValue.slice(0, -1);
         }
         else{
             displayValue = '0';
