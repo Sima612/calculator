@@ -86,3 +86,39 @@ button{
     color: #000;
     font-size: 2rem;
 }
+
+
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: repeat(4, 1fr); /* Keep four columns for buttons */
+        grid-template-rows: 15vh repeat(5, 15vh);
+        padding: 1vw;
+        margin: 1vw;
+    }
+    
+    .display {
+        font-size: 3rem;
+        padding: 1vw;
+    }
+    
+    button {
+        font-size: 1.5rem;
+        width: 100%; /* Make the buttons span the full width of their cell */
+        height: 15vh;
+    }
+    
+    .bigger-button {
+        grid-column: 1/5; /* Span all four columns for bigger button */
+        border-radius: 30px;
+    }
+}
+
+
+#calculator-display {
+    font-size: 44px; 
+    padding: 10px; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    text-overflow: ellipsis; 
+}
+

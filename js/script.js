@@ -28,33 +28,33 @@ clearButton.addEventListener('click', handleClear);
 //Number button click event listener
 numberButtons.forEach(button => {
     button.addEventListener('click', function(){
-        if (displayValue === '0' || displayValue === 'Error') {
-            displayValue = button.value;
-            //If the first button is an operator, don't add it to the expression
-            if (button.classList.contains('operator')){
-                displayValue = 'Error';
-            } else {
-                expression = button.value;
-            }
-        } else {
-            //If the button is an operator, add spaces around it
-            if (button.classList.contains('operator')){
-                //If the last character is an operator, replace it with the new one
-                if (expression.slice(-1) === ' '){ 
-                    expression = expression.slice(0, -3);
-                    displayValue = displayValue.slice(0, -1);
-                    expression += ' ' + button.value + ' ';
-                } else { //If the last character is a number, add the new operator
-                    expression += ' ' + button.value + ' ';
+        if (displayValue.length < 10) {
+            if (displayValue === '0' || displayValue === 'Error') {
+                displayValue = button.value;
+                if (button.classList.contains('operator')) {
+                    displayValue = 'Error';
+                } else {
+                    expression = button.value;
                 }
             } else {
-                expression += button.value;
+                if (button.classList.contains('operator')) {
+                    if (expression.slice(-1) === ' '){
+                        expression = expression.slice(0, -3);
+                        displayValue = displayValue.slice(0, -1);
+                        expression += ' ' + button.value + ' ';
+                    } else {
+                        expression += ' ' + button.value + ' ';
+                    }
+                } else {
+                    expression += button.value;
+                }
+                displayValue += button.value;
             }
-            displayValue += button.value;
+            updateDisplay();
         }
-        updateDisplay();
     });
 });
+
 
 //Clear button click event function
 function handleClear(){
