@@ -13,7 +13,6 @@ const numberButtons = document.querySelectorAll('.container button[type="button"
 const decimalButton = document.querySelector('#decimal');
 const changeSignalButton = document.querySelector('#change-signal');
 
-//TO DO: Fix decimal behavior when the . is clicked on screen
 //TO DO: Add percentage support
 //TO DO: Fix screen behavior when input cames from key board
 
@@ -59,6 +58,7 @@ numberButtons.forEach(button => {
                     } else {
                         expression += ' ' + button.value + ' ';
                     }
+                    decimalAdded = false;
                 } else {
                     expression += button.value;
                 }
@@ -86,6 +86,10 @@ function handleBackspace() {
             expression = expression.slice(0, -3);
         } else { //If the last character is a number, remove it
             expression = expression.slice(0, -1);
+        }
+        //If the last character was a decimal, set decimalAdded to false
+        if (displayValue.slice(-1) === '.') {
+            decimalAdded = false;
         }
         displayValue = displayValue.slice(0, -1);
     }
