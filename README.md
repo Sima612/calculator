@@ -4,3 +4,7 @@
 
 Last week team work assignment: DOM<br>
 Preview link: [https://sima612.github.io/calculator/](https://sima612.github.io/calculator/)
+
+### Contributors
+<!-- contributors -->
+<!-- /contributors -->
